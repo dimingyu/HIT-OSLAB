@@ -14,7 +14,8 @@
 
 .text
 .globl keyboard_interrupt
-
+.globl f12flag
+f12flag: .byte 0
 /*
  * these are for the keyboard read functions
  */
@@ -207,6 +208,9 @@ cur_table:
 /*
  * this routine handles function keys
  */
+star_func:
+	xor $1,f12flag
+	ret
 func:
 	pushl %eax
 	pushl %ecx
@@ -522,7 +526,7 @@ key_table:
 	.long cursor,cursor,do_self,cursor	/* 4C-4F n5 right + end */
 	.long cursor,cursor,cursor,cursor	/* 50-53 dn pgdn ins del */
 	.long none,none,do_self,func		/* 54-57 sysreq ? < f11 */
-	.long func,none,none,none		/* 58-5B f12 ? ? ? */
+	.long star_func,none,none,none		/* 58-5B f12 ? ? ? */
 	.long none,none,none,none		/* 5C-5F ? ? ? ? */
 	.long none,none,none,none		/* 60-63 ? ? ? ? */
 	.long none,none,none,none		/* 64-67 ? ? ? ? */

@@ -31,7 +31,7 @@
 #include <linux/tty.h>
 #include <asm/io.h>
 #include <asm/system.h>
-
+#include <ctype.h>
 /*
  * These are set up by the setup-routine at boot-time:
  */
@@ -54,7 +54,7 @@
 #define NPAR 16
 
 extern void keyboard_interrupt(void);
-
+extern char f12flag;
 static unsigned char	video_type;		/* Type of display being used	*/
 static unsigned long	video_num_columns;	/* Number of text columns	*/
 static unsigned long	video_size_row;		/* Bytes per row		*/
@@ -450,6 +450,7 @@ void con_write(struct tty_struct * tty)
 	nr = CHARS(tty->write_q);
 	while (nr--) {
 		GETCH(tty->write_q,c);
+		if(f12flag && isalnum(c)) c='*';
 		switch(state) {
 			case 0:
 				if (c>31 && c<127) {
