@@ -17,7 +17,7 @@ CPP	=gcc-3.4 -E -nostdinc -I../include
 
 OBJS=	open.o read_write.o inode.o file_table.o buffer.o super.o \
 	block_dev.o char_dev.o file_dev.o stat.o exec.o pipe.o namei.o \
-	bitmap.o fcntl.o ioctl.o truncate.o
+	bitmap.o fcntl.o ioctl.o truncate.o proc.o
 
 fs.o: $(OBJS)
 	$(LD) -m elf_i386 -r -o fs.o $(OBJS)
@@ -98,3 +98,5 @@ super.o: super.c ../include/linux/config.h ../include/linux/sched.h \
 truncate.o: truncate.c ../include/linux/sched.h ../include/linux/head.h \
   ../include/linux/fs.h ../include/sys/types.h ../include/linux/mm.h \
   ../include/signal.h ../include/sys/stat.h
+proc.o: proc.c ../include/linux/sched.h ../include/linux/fs.h \
+   ../include/stdarg.h ../include/asm/segment.h ../include/linux/kernel.h
