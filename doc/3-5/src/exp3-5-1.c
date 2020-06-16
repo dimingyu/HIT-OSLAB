@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<time.h>
 #include<sys/time.h>
-#include<stdlib.h>>
+#include<stdlib.h>
 #include<signal.h>
 int num = 0;
 void rwaltimer_set()
